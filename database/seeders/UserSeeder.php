@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'name' => 'Galaxy Solusindo',
             'email' => 'gasol@gmail.com',
             'password' => Hash::make('gasol123'),
-            'role'=> 'seller'
+            'role'=> 'member'
         ]
         );
     }

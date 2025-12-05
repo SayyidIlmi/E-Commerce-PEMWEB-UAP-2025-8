@@ -30,12 +30,30 @@ Route::middleware('guest')->group(function () {
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
         ->name('password.reset');
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+    Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+    Route::middleware(['auth', 'seller.only'])->get('/seller/dashboard', function () {
+        return view('seller.dashboard');
+    })->name('seller.dashboard');
 });
 
+Route::middleware(['auth', 'admin.only'])
+    ->get('/admin/dashboard', fn() => view('admin.dashboard'))
+    ->name('admin.dashboard');
+
+Route::middleware(['auth', 'seller.only'])
+    ->get('/seller/dashboard', fn() => view('seller.dashboard'))
+    ->name('seller.dashboard');
+
+Route::middleware(['auth', 'member.only'])
+    ->get('/member/dashboard', fn() => view('member.dashboard'))
+    ->name('member.dashboard');
+
 Route::middleware('auth')->group(function () {
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
