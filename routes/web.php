@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\LoginUserController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
@@ -34,9 +32,11 @@ Route::middleware(['auth', 'seller.only'])
     ->get('/seller/dashboard', fn() => view('seller.dashboard'))
     ->name('seller.dashboard');
 
-Route::middleware(['auth', 'member.only'])
-    ->get('/member/dashboard', fn() => view('member.dashboard'))
-    ->name('member.dashboard');
+Route::middleware(['auth', 'member.only'])->group(function () {
+    Route::get('/member/dashboard', [MemberController::class, 'index'])->name('member.dashboard');
+});
+
+
     
 
 require __DIR__.'/auth.php';
