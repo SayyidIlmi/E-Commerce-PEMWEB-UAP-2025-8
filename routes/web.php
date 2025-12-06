@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\LoginUserController;
@@ -25,6 +26,17 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin.only'])->group(function () {
     Route::resource('user', UserController::class);
 }); 
+Route::middleware(['auth', 'admin.only'])
+    ->get('/admin/dashboard', fn() => view('admin.dashboard'))
+    ->name('admin.dashboard');
 
+Route::middleware(['auth', 'seller.only'])
+    ->get('/seller/dashboard', fn() => view('seller.dashboard'))
+    ->name('seller.dashboard');
+
+Route::middleware(['auth', 'member.only'])
+    ->get('/member/dashboard', fn() => view('member.dashboard'))
+    ->name('member.dashboard');
+    
 
 require __DIR__.'/auth.php';

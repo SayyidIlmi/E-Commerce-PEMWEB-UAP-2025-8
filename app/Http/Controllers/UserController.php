@@ -45,7 +45,7 @@ class UserController extends Controller
             'phone_number'    => $request->phone_number ?? null,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil dibuat');
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil dibuat');
     }
 
     // Show detail user

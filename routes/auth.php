@@ -40,17 +40,7 @@ Route::middleware('guest')->group(function () {
     })->name('seller.dashboard');
 });
 
-Route::middleware(['auth', 'admin.only'])
-    ->get('/admin/dashboard', fn() => view('admin.dashboard'))
-    ->name('admin.dashboard');
 
-Route::middleware(['auth', 'seller.only'])
-    ->get('/seller/dashboard', fn() => view('seller.dashboard'))
-    ->name('seller.dashboard');
-
-Route::middleware(['auth', 'member.only'])
-    ->get('/member/dashboard', fn() => view('member.dashboard'))
-    ->name('member.dashboard');
 
 Route::middleware('auth')->group(function () {
 
