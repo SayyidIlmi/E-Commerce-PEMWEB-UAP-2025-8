@@ -12,10 +12,9 @@ class MemberController extends Controller
     {
         // Semua kategori
         $categories = ProductCategory::all();
-
         // 4 produk terbaru
         $search = request('search'); // ambil query dari input search
-        $latestProducts = Product::with('store')->latest()->when($search, function ($query) use ($search) {
+        $latestProducts = Product::with('store','productCategory')->latest()->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%")
                       ->orWhere('description', 'LIKE', "%{$search}%");

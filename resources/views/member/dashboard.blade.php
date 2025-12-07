@@ -89,10 +89,10 @@
                         <div class="product-info">
                             <h4><a href="product/{{ $product->slug }}"
                                     style="text-decoration: none; color: inherit;">{{ $product->name }}</a></h4>
-                            <span class="category-tag">Accessory</span>
+                            <span class="category-tag">{{ $product->productCategory->name}}</span>
                             <div class="price-row"><span class="price">Rp
                                     {{ number_format($product->price, 0, ',', '.') . '.000' }}</span><a
-                                    href="product/{{ $product->slug }}" class="btn-icon"><i
+                                    href="product/{{ $product->slug }}" class="btn-icon" style="text-decoration:none;"><i
                                         class="fa-solid fa-chevron-right"></i></a></div>
                         </div>
                     </div>
