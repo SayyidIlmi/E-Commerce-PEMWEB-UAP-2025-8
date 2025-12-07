@@ -65,10 +65,18 @@ class AdminController extends Controller
 
      public function manage()
     {
+                $totalPendingStores = Store::where('is_verified', false)->count();
+
+        $search = request('search'); // ambil query dari input search
         $users = User::with('store')
             ->where('role', '!=', 'admin')
-            ->paginate(10); 
-
-        return view('admin.users', compact('users'));
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
+                });
+            })
+            ->paginate(10);           
+        return view('admin.users', compact( 'search','users' ,'totalPendingStores'));
     }
 }
