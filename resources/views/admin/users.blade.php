@@ -81,6 +81,7 @@
                             <th>Email</th>
                             <th>Role</th>
                             <th>Toko Terkait</th>
+                            <th>Kelola</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,10 +102,29 @@
                             <td><span style="color: #4ade80;">{{ $user->email }}</span></td>
                             <td><span class="badge" style="background: {{ $isSeller ? 'green' : 'black' }}; color: #d1d5db;">{{ $isSeller ? 'Seller' : 'Buyer' }}</span></td>
                             <td>{{ $isSeller ? $user->store->name : '-' }}</td>
+                             <td>
+                                    <div class="action-btn-group">
+                                        <a href="{{ route('admin.users.edit', $user->id) }}">
+                                            <button class="btn-action btn-verify" title="Edit" type="submit"><i
+                                                            class="fa-solid fa-check"></i> Edit</button>
+
+                                        </a>
+                                    <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn-action btn-reject" title="Delete" type="submit"
+                                            onclick="return confirm('Delete user ini?')"><i
+                                            class="fa-solid fa-xmark"></i> Delete</button>
+                                        </form>
+                                        </div>
+                                    </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                
+                {{ $users->links() }}
+
             </div>
         </main>
     </div>

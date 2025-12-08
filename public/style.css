@@ -192,7 +192,51 @@ body:not(.dashboard-body) {
     accent-color: #6366f1;
     transform: scale(1.1);
 }
+.pagination {
+    display: flex;
+    gap: 6px;
+    padding-left: 0;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
 
+.page-item {
+    display: inline-block;
+}
+
+.page-link {
+    display: block;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #0d6efd;
+    background-color: #111827;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.page-link:hover {
+    background-color: #0d6efd;
+    border-color: #ced4da;
+    color: #fff;
+}
+
+.page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #fff;
+    cursor: default;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #111827;
+    border: 1px solid #dee2e6;
+    pointer-events: none;
+}
 .checkbox-container {
     margin-bottom: 25px;
     font-size: 13px;

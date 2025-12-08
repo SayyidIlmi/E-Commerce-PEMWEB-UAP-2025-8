@@ -26,10 +26,12 @@ Route::middleware(['auth', 'admin.only'])->group(function () {
     Route::put('/admin/store/{id}/verify', [AdminController::class, 'verifyStore'])->name('admin.store.verify');
     Route::delete('/admin/store/{id}/reject', [AdminController::class, 'rejectStore'])->name('admin.store.reject');
     Route::get('/admin/users', [AdminController::class, 'manage'])->name('admin.users');
+    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edituser'])->name('admin.users.edit');
+    Route::put('/admin/users/{id}', [AdminController::class, 'updateuser'])->name('admin.users.update');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'destroyuser'])->name('admin.users.delete');
     Route::get('/admin/verifikasi', [AdminController::class, 'verifikasi'])->name('admin.verifikasi');
     Route::get('/admin/stores', [AdminController::class, 'toko'])->name('admin.stores');
 });
-
 Route::middleware(['auth', 'seller.only'])
     ->get('/seller/dashboard', fn() => view('seller.dashboard'))
     ->name('seller.dashboard');
@@ -39,6 +41,6 @@ Route::middleware(['auth', 'member.only'])->group(function () {
 });
 
 
-    
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

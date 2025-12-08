@@ -22,19 +22,19 @@ class AdminController extends Controller
             ->where('is_verified', false)
             ->latest()
             ->get();
-            $search = request('search'); // ambil query dari input search
-            $users = User::with('store')
+        $search = request('search'); // ambil query dari input search
+        $users = User::with('store')
             ->where('role', '!=', 'admin')
             ->limit(5)
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%")
-                      ->orWhere('email', 'LIKE', "%{$search}%");
+                        ->orWhere('email', 'LIKE', "%{$search}%");
                 });
             })
 
-        ->take(5) // tetap batasi 5 hasil
-        ->get();
+            ->take(5) // tetap batasi 5 hasil
+            ->get();
         return view('admin.dashboard', compact(
             'pendingStores',
             'totalPendingStores',
@@ -45,7 +45,7 @@ class AdminController extends Controller
             'totalTransactions',
             'search'
         ));
-        
+
     }
     public function verifyStore($id)
     {
@@ -63,9 +63,54 @@ class AdminController extends Controller
         return back()->with('success', 'Toko berhasil direject dan dihapus!');
     }
 
-     public function manage()
+    public function edituser($id)
     {
-                $totalPendingStores = Store::where('is_verified', false)->count();
+        $user = User::findOrFail($id);
+        $totalPendingStores = Store::where('is_verified', false)->count();
+
+        return view('admin.edit', compact('user', 'totalPendingStores'));
+
+    }
+    public function updateuser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|in:member,seller,admin',
+            'phone_number' => 'required|string|max:20',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'phone_number' => $request->phone_number,
+        ]);
+
+        return redirect()->route('admin.users', $user->id)
+            ->with('success', 'User berhasil diperbarui.');
+    }
+
+    public function destroyuser($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Jika user punya toko → hapus juga
+        if ($user->store) {
+            $user->store->delete();
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users')
+            ->with('success', 'User berhasil dihapus.');
+    }
+
+    public function manage()
+    {
+        $totalPendingStores = Store::where('is_verified', false)->count();
 
         $search = request('search'); // ambil query dari input search
         $users = User::with('store')
@@ -73,40 +118,40 @@ class AdminController extends Controller
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('email', 'LIKE', "%{$search}%");
+                        ->orWhere('email', 'LIKE', "%{$search}%");
                 });
             })
-            ->paginate(10);           
-        return view('admin.users', compact( 'search','users' ,'totalPendingStores'));
+            ->paginate(10);
+        return view('admin.users', compact('search', 'users', 'totalPendingStores'));
     }
     public function verifikasi()
     {
         $pendingStores = Store::where('is_verified', false)->get();
         $totalPendingStores = Store::where('is_verified', false)->count();
         $search = request('search'); // ambil query dari input search
-         $pendingStoresData = Store::with('user')
+        $pendingStoresData = Store::with('user')
             ->where('is_verified', false)
             ->latest()
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%")
-                      ->orWhere('city', 'LIKE', "%{$search}%");
+                        ->orWhere('city', 'LIKE', "%{$search}%");
                 });
             })
-        ->take(10) // tetap batasi 5 hasil
-        ->get();           
-        return view('admin.verifikasi', compact( 'search','pendingStores' ,'totalPendingStores', 'pendingStoresData'));
+            ->take(10) // tetap batasi 5 hasil
+            ->get();
+        return view('admin.verifikasi', compact('search', 'pendingStores', 'totalPendingStores', 'pendingStoresData'));
     }
     public function toko()
     {
         $totalPendingStores = Store::where('is_verified', false)->count();
         $search = request('search'); // ambil query dari input search
         $storeGets = Store::with('user')->where('is_verified', true)->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'LIKE', "%{$search}%")
-                      ->orWhere('city', 'LIKE', "%{$search}%");
-                });
-            })->paginate(10);           
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('city', 'LIKE', "%{$search}%");
+            });
+        })->paginate(10);
         return view('admin.stores', compact('totalPendingStores', 'search', 'storeGets'));
     }
 }

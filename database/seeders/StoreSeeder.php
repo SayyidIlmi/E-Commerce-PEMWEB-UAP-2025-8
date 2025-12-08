@@ -20,5 +20,29 @@ class StoreSeeder extends Seeder
             'postal_code'=> '65111',
             'is_verified'=> true,
         ]);
+        Store::create([
+            'logo'=>'Ilmi-Tech-Store.png',
+            'user_id' => 6,
+            'name' => 'Ilmi Tech Store',
+            'about'=> 'We provide the best electronic products.',
+            'phone'=> '081234567811',
+            'address_id'=> 2,
+            'city'=> 'Malang',
+            'address'=> 'Jl. Veteran No.123',
+            'postal_code'=> '65121',
+            'is_verified'=> false,
+        ]);
+        Store::create([
+            'logo'=>'GandiStore.png',
+            'user_id' => 12,
+            'name' => 'Gandi Store',
+            'about'=> 'We provide the best electronic products.',
+            'phone'=> '0812444567890',
+            'address_id'=> 3,
+            'city'=> 'Malang',
+            'address'=> 'Jl. SukaBumi No.123',
+            'postal_code'=> '65211',
+            'is_verified'=> false,
+        ]);
     }
 }
