@@ -158,51 +158,19 @@
                 <h3>Rekomendasi Minggu Ini</h3>
                 <a href="storeDashboard.html" style="color: #6366f1; text-decoration: none; font-size: 14px;">Lihat Semua &rarr;</a>
             </div>
-
             <div class="product-grid" style="grid-template-columns: repeat(4, 1fr);"> 
+                @foreach ($latestProducts as $product)
                 <div class="card product-card">
                     <div class="product-img">
-                        <img src="https://dlcdnwebimgs.asus.com/gain/49D97646-0628-4467-93C0-55D4E8934449" style="width: 100%; height: 100%; object-fit: contain;">
+                        <img src={{asset('ImageSource/' . $product->slug . '.png')}} style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                     <div class="product-info">
-                        <h4>ASUS ROG Strix G15</h4>
-                        <span class="category-tag">Gaming Laptop</span>
-                        <div class="price-row"><span class="price">Rp 27.999.000</span></div>
+                        <h4>{{ $product->name }}</h4>
+                        <span class="category-tag">{{ $product->productCategory->name }}</span>
+                        <div class="price-row"><span class="price">Rp {{ number_format($product->price, 0, ',', '.') }}</span></div>
                     </div>
-                </div>
-
-                <div class="card product-card">
-                    <div class="product-img">
-                        <img src="https://p1-ofp.static.pub/medias/bWFzdGVyfHJvb3R8MzExMjcxfGltYWdlL3BuZ3xoOTgvaGE5LzE0MzMyMjg2NTc4NzE4LnBuZ3w4OThkMzY4NTgxZDY4NmJkYTZjNWUyNzD4ZGU1ZjU4M2E1YmM1YjE2YjY5YjY1YjY5YjY5YjY5.png" style="width: 100%; height: 100%; object-fit: contain;">
-                    </div>
-                    <div class="product-info">
-                        <h4>Lenovo Legion 5</h4>
-                        <span class="category-tag">Gaming Laptop</span>
-                        <div class="price-row"><span class="price">Rp 21.500.000</span></div>
-                    </div>
-                </div>
-
-                <div class="card product-card">
-                    <div class="product-img">
-                        <i class="fa-solid fa-keyboard" style="font-size: 50px; color: #374151;"></i>
-                    </div>
-                    <div class="product-info">
-                        <h4>Keychron K2 Pro</h4>
-                        <span class="category-tag">Keyboard</span>
-                        <div class="price-row"><span class="price">Rp 1.800.000</span></div>
-                    </div>
-                </div>
-
-                <div class="card product-card">
-                    <div class="product-img">
-                        <i class="fa-solid fa-computer-mouse" style="font-size: 50px; color: #374151;"></i>
-                    </div>
-                    <div class="product-info">
-                        <h4>Logitech G Pro X</h4>
-                        <span class="category-tag">Mouse</span>
-                        <div class="price-row"><span class="price">Rp 1.650.000</span></div>
-                    </div>
-                </div>
+                </div>   
+                @endforeach
             </div>
         </section>
 
