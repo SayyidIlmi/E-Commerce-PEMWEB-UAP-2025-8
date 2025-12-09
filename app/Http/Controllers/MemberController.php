@@ -31,4 +31,9 @@ class MemberController extends Controller
             'search'
         ));
     }
+    public function dashboard()
+    {
+        $latestProducts = Product::with('store','productCategory')->latest()->limit(4)->get();
+        return view('welcome', compact('latestProducts'));
+    }
 }
