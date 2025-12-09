@@ -52,41 +52,33 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <a href="{{ route('dashboard') }}">
-                    <img src="{{ asset('ImageSource/josjis_logo.png') }}" alt="Logo" style="height: 40px; width: auto;">
-                </a>
+                <img src="{{ asset('ImageSource/josjis_logo.png') }}" alt="Logo josjis">
                 <span class="logo-text">Hardware_JosJis</span>
             </div>
             <ul class="nav-links">
-                <li><a href="{{ route('dashboard') }}">Beranda</a></li>
-                <li><a href="#" class="active">Produk</a></li>
-                <li><a href="{{ route('dashboard') }}">Transaksi</a></li>
+                <li><a href="{{ route('member.dashboard') }}" class="active">Home</a></li>
+                <li><a href="{{ route('member.transactionHistory') }}">Riwayat Transaksi</a></li>
+                <li><a href="{{ route('member.topup') }}">Topup Saldo</a></li>
+                <li><a href="{{ route('member.store') }}">Toko Saya</a></li>
             </ul>
             <div class="nav-actions">
-                <div class="search-box">
-                    <i class="fa-solid fa-search"></i>
-                    <input type="text" placeholder="Cari produk...">
-                </div>
-                
-                <a href="{{ route('dashboard') }}" class="btn-icon-nav" style="position: relative;">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    {{-- <span class="badge-cart">2</span> --}}
-                </a>
 
-                @auth
-                    <div class="info-item" style="display: flex; gap: 5px; align-items: center; margin-left: 10px;">
-                        <small style="color:#9ca3af;">halo, </small>
-                        <span style="color:#fff; font-weight:600;">{{ Auth::user()->name }}</span>
-                    </div>
-                    <form method="POST" action="{{ route('logout') }}" style="margin-left: 10px;">
-                        @csrf
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="btn-nav-logout" style="font-size: 12px; padding: 5px 15px;">
-                            Log out
-                        </a>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="btn-nav-login" style="margin-left: 10px;">Login</a>
-                @endauth
+                         <div class="search-box">
+                        <form action="{{ route('member.dashboard') }}" method="GET">
+                        <i class="fa-solid fa-search"></i><input type="text"
+                            name="search" placeholder="Cari produk..." style="width: 200px;" value="" ></form></div>
+
+                <div class="info-item" style="border:none; margin:0; padding:0; text-align:right;">
+                    <small style="color:#9ca3af;">halo, </small>
+                    <span style="color:#fff; font-weight:600;">{{Auth::user()->name}}</span>
+                </div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="btn-nav-logout">
+                        {{ __('Log out') }}
+                    </a>
+                </form>
+
             </div>
         </div>
     </nav>
@@ -94,9 +86,9 @@
     <div class="container" style="display: block; max-width: 1200px; padding-top: 20px;">
         
         <div style="margin-bottom: 20px; font-size: 13px; color: #9ca3af;">
-            <a href="{{ route('dashboard') }}" style="color: #9ca3af; text-decoration: none;">Beranda</a> 
+            <a href="{{ route('member.dashboard') }}" style="color: #9ca3af; text-decoration: none;">Beranda</a> 
             <span style="margin: 0 5px;">/</span> 
-            <a href="#" style="color: #9ca3af; text-decoration: none;">{{ $product->category->name ?? 'Produk' }}</a>
+            <a href="{{ route('member.category', $product->productCategory->slug) }}" style="color: #9ca3af; text-decoration: none;">{{ $product->category->name ?? 'Produk' }}</a>
             <span style="margin: 0 5px;">/</span> 
             <span style="color: #6366f1;">{{ $product->name }}</span>
         </div>
@@ -105,7 +97,7 @@
             
             <div class="product-gallery">
                 <div class="main-image-card">
-                    <img src="{{ asset('ImageSource/gaming-laptop-asus-rog.png') }}" alt="{{ $product->name }}" id="mainImg">
+                    <img src="{{ asset('ImageSource/' . $product->slug . '.png') }}" alt="{{ $product->name }}" id="mainImg">
                     
                 </div>
                 
@@ -129,7 +121,7 @@
                     </div>
                 </div>
 
-                <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
+                <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}.000</div>
 
                 <p style="color: #d1d5db; margin-bottom: 25px; line-height: 1.6;">
                     {{ Str::limit($product->description, 150) }}
@@ -137,19 +129,6 @@
 
                 <form action="{{ route('dashboard', $product->id) }}" method="POST">
                     @csrf
-                    
-                    <div class="variant-group">
-                        <label class="variant-label">Pilih Varian:</label>
-                        <div class="variant-options">
-                            <label class="variant-btn selected">
-                                <input type="radio" name="variant" value="standard" checked style="display:none;"> Standard
-                            </label>
-                            <label class="variant-btn">
-                                <input type="radio" name="variant" value="pro" style="display:none;"> Pro Bundle
-                            </label>
-                        </div>
-                    </div>
-
                     <div class="action-area">
                         <div class="qty-control">
                             <button type="button" class="qty-btn" onclick="decrementQty()">-</button>

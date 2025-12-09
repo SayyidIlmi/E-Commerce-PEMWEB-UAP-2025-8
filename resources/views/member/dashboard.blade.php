@@ -21,10 +21,10 @@
                 <span class="logo-text">Hardware_JosJis</span>
             </div>
             <ul class="nav-links">
-                <li><a href="/" class="active">Home</a></li>
-                <li><a href="history.html">Riwayat Transaksi</a></li>
-                <li><a href="topup.html">Topup Saldo</a></li>
-                <li><a href="tokoSaya.html">Toko Saya</a></li>
+                <li><a href="{{ route('member.dashboard') }}" class="active">Home</a></li>
+                <li><a href="{{ route('member.transactionHistory') }}">Riwayat Transaksi</a></li>
+                <li><a href="{{ route('member.topup') }}">Topup Saldo</a></li>
+                <li><a href="{{ route('member.store') }}">Toko Saya</a></li>
             </ul>
             <div class="nav-actions">
 
@@ -92,7 +92,7 @@
                             <span class="category-tag">{{ $product->productCategory->name}}</span>
                             <div class="price-row"><span class="price">Rp
                                     {{ number_format($product->price, 0, ',', '.') . '.000' }}</span><a
-                                    href="product/{{ $product->slug }}" class="btn-icon" style="text-decoration:none;"><i
+                                    href="product/{{ $product->id }}" class="btn-icon" style="text-decoration:none;"><i
                                         class="fa-solid fa-chevron-right"></i></a></div>
                         </div>
                     </div>

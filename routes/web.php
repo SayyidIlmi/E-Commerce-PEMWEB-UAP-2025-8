@@ -43,6 +43,9 @@ Route::middleware(['auth', 'member.only'])->group(function () {
     Route::get('/member/dashboard', [MemberController::class, 'index'])->name('member.dashboard');
     Route::get('/member/category/{slug}', [MemberController::class, 'sortbycategory'])->name('member.category');
     Route::get('/member/product/{id}', [MemberController::class, 'getProduct'])->name('member.product');
+    Route::get('/member/transactionHistory', [MemberController::class, 'getTransaction'])->name('member.transactionHistory');
+    Route::get('/member/topup', [MemberController::class, 'getTopup'])->name('member.topup');
+    Route::get('/member/store', [MemberController::class, 'getStore'])->name('member.store');
 });
 
 

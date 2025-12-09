@@ -49,7 +49,7 @@ class MemberController extends Controller
     }
     public function getProduct($id)
 {
-    $product = Product::with(['store', 'productImages', 'productCategory'])
+    $product = Product::with(['store', 'productCategory'])
         ->findOrFail($id);
 
     return view('member.product', compact('product'));

@@ -21,15 +21,15 @@
                 <span class="logo-text">Hardware_JosJis</span>
             </div>
             <ul class="nav-links">
-                <li><a href="/" class="active">Home</a></li>
-                <li><a href="history.html">Riwayat Transaksi</a></li>
-                <li><a href="topup.html">Topup Saldo</a></li>
-                <li><a href="tokoSaya.html">Toko Saya</a></li>
+                <li><a href="{{ route('member.dashboard') }}" class="active">Home</a></li>
+                <li><a href="{{ route('member.transactionHistory') }}">Riwayat Transaksi</a></li>
+                <li><a href="{{ route('member.topup') }}">Topup Saldo</a></li>
+                <li><a href="{{ route('member.store') }}">Toko Saya</a></li>
             </ul>
             <div class="nav-actions">
 
                 <div class="search-box">
-                    <!-- <form action="{{ route('member.dashboard') }}" method="GET"> -->
+                    <form action="{{ route('member.dashboard') }}" method="GET">
                     <i class="fa-solid fa-search"></i><input type="text" name="search" placeholder="Cari produk..."
                         style="width: 200px;" value=""></form>
                 </div>
@@ -82,7 +82,7 @@
                 @if($products->count() == 0)
                     <p>Tidak ada produk di kategori ini.</p>
                 @else
-                        <h3>Produk Terbaru loh yaa</h3>
+                        <h3>Produk Category ' {{ $products->first()->productCategory->name }} '</h3>
                     </div>
                     <div class="product-grid">
                         @foreach($products as $product)

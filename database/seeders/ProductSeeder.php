@@ -103,7 +103,7 @@ class ProductSeeder extends Seeder
             Product::create([  
         'store_id'=>1,
         'product_category_id'=>5,
-        'name'=>'VGA Card rTX 3080',
+        'name'=>'VGA Card RTX 3080',
         'slug'=>'vga-card-rtx-3080',
         'description'=>'A top-of-the-line VGA card for enhanced gaming performance.',
         'condition'=>'new',
