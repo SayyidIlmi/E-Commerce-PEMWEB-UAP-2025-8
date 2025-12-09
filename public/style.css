@@ -8,10 +8,10 @@
 
 /* Background Utama */
 body {
-    background: linear-gradient(to right, #1f2937, #111827);
-    /* background-color: #111827; */
+background: linear-gradient(to right,  #111827, #1f2937, #111827);    /* background-color: #111827; */
     color: #e2e8f0;
     min-height: 100vh;
+    
 }
 
 /* Khusus halaman Login/Register (Flex center) */
@@ -433,7 +433,7 @@ body.dashboard-body {
 
 .nav-actions {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
 }
 

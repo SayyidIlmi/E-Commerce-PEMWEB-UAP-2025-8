@@ -17,6 +17,12 @@
             padding: 0 20px;
         }
 
+    
+
+        .brand-header-logo img {
+            max-width: 90%;
+            height: auto;
+        }
         /* Hero Section Custom */
         .hero-section {
             margin-top: 30px;
@@ -51,6 +57,32 @@
         .hero-image img { max-width: 100%; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); transform: rotate(-5deg); transition: 0.5s; }
         .hero-image img:hover { transform: rotate(0deg) scale(1.05); }
 
+        /* --- NEW: BRAND MARQUEE --- */
+        .brand-marquee {
+            overflow: hidden;
+            padding: 30px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+            position: relative;
+            margin: 40px 0;
+        }
+        .brand-marquee::before, .brand-marquee::after {
+            content: ""; position: absolute; top: 0; width: 100px; height: 100%; z-index: 2;
+        }
+        .brand-marquee::before { left: 0; background: linear-gradient(to right, #131a2bff, transparent); }
+        .brand-marquee::after { right: 0; background: linear-gradient(to left, #131a2bff, transparent); }
+
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee-content span {
+            font-size: 20px; font-weight: 600; color: #6b7280; margin: 0 40px;
+            display: inline-flex; align-items: center; gap: 10px; transition: 0.3s;
+        }
+        .marquee-content span:hover { color: #fff; }
+
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
         /* Fitur Grid (Reuse style stats-grid tapi di-tweak) */
         .features-grid {
             display: grid;
@@ -69,6 +101,23 @@
         .feature-card:hover { transform: translateY(-10px); border-color: #6366f1; }
         .feature-icon { font-size: 40px; color: #6366f1; margin-bottom: 20px; }
 
+        /* --- NEW: FAQ ACCORDION --- */
+        .faq-item {
+            background: rgba(31, 41, 55, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: 0.3s;
+        }
+        .faq-item:hover { border-color: #6366f1; }
+        .faq-item summary {
+            padding: 15px 20px; cursor: pointer; font-weight: 500; color: white;
+            list-style: none; display: flex; justify-content: space-between; align-items: center;
+        }
+        .faq-item summary::after { content: '+'; font-size: 20px; color: #6366f1; font-weight: bold; }
+        .faq-item[open] summary::after { content: '-'; }
+        .faq-item p {
+            padding: 0 20px 20px 20px; color: #9ca3af; font-size: 14px; line-height: 1.6;
+            margin: 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;
+        }
         /* Footer Sederhana */
         .landing-footer {
             margin-top: 80px;
@@ -85,6 +134,8 @@
             .hero-image { width: 100%; }
             .features-grid { grid-template-columns: 1fr; }
         }
+
+        
     </style>
 </head>
 <body class="dashboard-body">
@@ -109,13 +160,35 @@
 
     <div class="landing-container">
 
+    <div class="brand-header-container">
+        <div class="brand-header-logo">
+            <img src="{{asset('ImageSource/landing_page_josjis.png')}}" alt="Hardware_JosJis Big Logo">
+        </div>
+    </div>
+
+    
+        <div class="brand-marquee">
+            <div class="marquee-content">
+                <span><i class="fa-brands fa-windows"></i> Microsoft</span>
+                <span><i class="fa-brands fa-apple"></i> Apple</span>
+                <span><i class="fa-brands fa-intel"></i> Intel</span>
+                <span><i class="fa-brands fa-amd"></i> AMD</span>
+                <span><i class="fa-brands fa-nvidia"></i> Nvidia</span>
+                <span><i class="fa-brands fa-playstation"></i> PlayStation</span>
+                <span><i class="fa-brands fa-windows"></i> Microsoft</span>
+                <span><i class="fa-brands fa-apple"></i> Apple</span>
+                <span><i class="fa-brands fa-intel"></i> Intel</span>
+                <span><i class="fa-brands fa-amd"></i> AMD</span>
+            </div>
+        </div>
+
         <section class="hero-section">
             <div class="hero-blob" style="top: -50px; left: -50px;"></div>
             <div class="hero-blob" style="bottom: -50px; right: -50px; background: #ec4899;"></div>
 
             <div class="hero-text">
                 <h1>Upgrade Setup,<br>Level Up Skill.</h1>
-                <p>Temukan laptop gaming, peripheral, dan komponen PC terbaik dengan harga yang masuk akal. Garansi resmi, pengiriman aman ke seluruh Indonesia.</p>
+                <p>Temukan laptop gaming, peripheral, dan komponen PC terbaik dengan harga setara bitcoin. Garansi resmi, pengiriman aman ke seluruh FILKOM.</p>
                 
                 <div style="display: flex; gap: 15px;">
                     <a href="login" class="submit-btn" style="width: auto; padding: 15px 40px; background: #6366f1; color: white; text-decoration: none;">Belanja Sekarang</a>
@@ -156,7 +229,7 @@
         <section id="produk">
             <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
                 <h3>Rekomendasi Minggu Ini</h3>
-                <a href="storeDashboard.html" style="color: #6366f1; text-decoration: none; font-size: 14px;">Lihat Semua &rarr;</a>
+                <a href="login" style="color: #6366f1; text-decoration: none; font-size: 14px;">Lihat Semua &rarr;</a>
             </div>
 
             <div class="product-grid" style="grid-template-columns: repeat(4, 1fr);"> 
@@ -220,12 +293,87 @@
             </div>
         </section>
 
+        <section id="testimoni" style="margin-top: 80px;">
+            <div class="section-header" style="text-align: center; margin-bottom: 40px;">
+                <h3>Apa Kata member JosJis?</h3>
+                <p style="color: #9ca3af;">Ulasan asli dari member setia kami.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card" style="text-align: left; position: relative;">
+                    <i class="fa-solid fa-quote-right" style="position: absolute; top: 20px; right: 20px; font-size: 40px; color: rgba(255,255,255,0.05);"></i>
+                    <div style="color: #fbbf24; margin-bottom: 10px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="color: #e2e8f0; font-style: italic; margin-bottom: 20px;">"Barang sampai dengan aman di Papua. Packing kayunya tebal kayu asli sumatera."</p>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 40px; height: 40px; background: #6366f1; border-radius: 50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">A</div>
+                        <div>
+                            <h5 style="color: white; margin: 0; font-size: 14px;">Agus Papare</h5>
+                            <small style="color: #9ca3af;">Jayapura</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="text-align: left; position: relative;">
+                    <i class="fa-solid fa-quote-right" style="position: absolute; top: 20px; right: 20px; font-size: 40px; color: rgba(255,255,255,0.05);"></i>
+                    <div style="color: #fbbf24; margin-bottom: 10px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <p style="color: #e2e8f0; font-style: italic; margin-bottom: 20px;">"pesan laptop yang datang malah kasih sayang admin.(adminnya ramah bjir)"</p>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">B</div>
+                        <div>
+                            <h5 style="color: white; margin: 0; font-size: 14px;">Budi Gaming</h5>
+                            <small style="color: #9ca3af;">Surabaya</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="text-align: left; position: relative;">
+                    <i class="fa-solid fa-quote-right" style="position: absolute; top: 20px; right: 20px; font-size: 40px; color: rgba(255,255,255,0.05);"></i>
+                    <div style="color: #fbbf24; margin-bottom: 10px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="color: #e2e8f0; font-style: italic; margin-bottom: 20px;">"Admin fast respon banget wok"</p>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 40px; height: 40px; background: #ec4899; border-radius: 50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">S</div>
+                        <div>
+                            <h5 style="color: white; margin: 0; font-size: 14px;">Siti Nurhaliza</h5>
+                            <small style="color: #9ca3af;">Jakarta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="max-width: 800px; margin: 0 auto 80px auto;">
+            <div class="section-header" style="text-align: center; margin-bottom: 30px;">
+                <h3>FAQ</h3>
+            </div>
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary>Apakah barang bergaransi resmi?</summary>
+                    <p>Tentu saja! Semua produk di Hardware_JosJis bergaransi resmi distributor Indonesia (TAM, Synnex, Astrindo, dll).</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Bisa request rakit PC sesuai budget?</summary>
+                    <p>Bisa banget. Silakan chat admin, sebutkan budget dan kebutuhan (misal: editing atau gaming), kami buatkan simulasinya.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Berapa lama proses pengiriman?</summary>
+                    <p>Untuk barang ready stock, akan dikirim di hari yang sama jika order sebelum jam 15.00 WIB. Estimasi sampai tergantung ekspedisi.</p>
+                </details>
+            </div>
+        </section>
+
         <footer class="landing-footer">
             <div class="logo" style="justify-content: center; margin-bottom: 20px;">
-                <i class="fa-solid fa-cube" style="color: #6366f1; font-size: 24px;"></i>
-                <span class="logo-text" style="font-size: 24px;">Hardware_JosJis</span>
+                <img src={{asset('ImageSource/josjis_logo.png')}} alt="Logo" style="height: 40px; width: auto;">
+                <span class="logo-text">Hardware_JosJis</span>
             </div>
-            <p>&copy; 2023 Hardware_JosJis. All rights reserved.</p>
+            <p>&copy; 2025 Hardware_JosJis. All rights reserved.Created by Kelompok 8 PTI-B.
+            </p>
             <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
                 <a href="#" style="color: #9ca3af;"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#" style="color: #9ca3af;"><i class="fa-brands fa-twitter"></i></a>
