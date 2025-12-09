@@ -76,6 +76,35 @@
         .hero-image img { max-width: 100%; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); transform: rotate(-5deg); transition: 0.5s; }
         .hero-image img:hover { transform: rotate(0deg) scale(1.05); }
 
+        /* --- NEW: BRAND MARQUEE --- */
+        .brand-marquee {
+            overflow: hidden;
+            padding: 30px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+            position: relative;
+            margin: 40px 0;
+        }
+        .brand-marquee::before, .brand-marquee::after {
+            content: ""; position: absolute; top: 0; width: 100px; height: 100%; z-index: 2;
+        }
+        .brand-marquee::before { left: 0; background: linear-gradient(to right, #131a2bff, transparent); }
+        .brand-marquee::after { right: 0; background: linear-gradient(to left, #131a2bff, transparent); }
+
+
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee-content span {
+            font-size: 20px; font-weight: 600; color: #6b7280; margin: 0 40px;
+            display: inline-flex; align-items: center; gap: 10px; transition: 0.3s;
+        }
+        .marquee-content span:hover { color: #fff; }
+
+
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+
         /* Fitur Grid (Reuse style stats-grid tapi di-tweak) */
         .features-grid {
             display: grid;
@@ -277,8 +306,8 @@
         <section id="produk">
             <div class="section-header"
                 style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h3>Rekomendasi Minggu Ini</h3>
-                <a href="storeDashboard.html" style="color: #6366f1; text-decoration: none; font-size: 14px;">Lihat Semua &rarr;</a>
+                <h3>Rekomendasi produk</h3>
+                <a href="login" style="color: #6366f1; text-decoration: none; font-size: 14px;">Lihat Semua &rarr;</a>
             </div>
             <div class="product-grid" style="grid-template-columns: repeat(4, 1fr);">
                 @foreach ($latestProducts as $product)
