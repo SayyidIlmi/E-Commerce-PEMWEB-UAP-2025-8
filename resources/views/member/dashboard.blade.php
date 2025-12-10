@@ -118,12 +118,16 @@
                     <h3>Cabang / Lokasi</h3>
                 </div>
                 <ul class="location-list">
-                    @foreach($latestStores as $store)
-                        <li><a href="store/{{ $store->id}}" style="text-decoration: none; color: inherit;"><i
-                                    class="fa-solid fa-store"></i> <span>{{ $store->name }}</span></a>
-                        </li>
-                    @endforeach
-                </ul>
+    @foreach($latestStores as $store)
+        <li>
+            {{-- Gunakan route() agar link otomatis benar --}}
+            <a href="{{ route('member.dstore', $store->id) }}" style="text-decoration: none; color: inherit;">
+                <i class="fa-solid fa-store"></i> 
+                <span>{{ $store->name }}</span>
+            </a>
+        </li>
+    @endforeach
+</ul>
             </div>
             <div class="card support-card">
                 <h3>Support & Info</h3>
