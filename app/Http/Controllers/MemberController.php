@@ -145,4 +145,17 @@ class MemberController extends Controller
 
 
     }
+    public function showStore($id)
+{
+    // 1. Ambil data toko berdasarkan ID
+    // Pastikan relasi di model Store namanya 'Product' (sesuai kodingan Anda sebelumnya)
+    $store = Store::with(['Product'])->findOrFail($id);
+
+    // 2. Hitung jumlah produk (opsional, untuk statistik)
+    $totalProducts = $store->Product->count();
+
+    // 3. Panggil view 'dstore' yang ada di folder 'member'
+    // PERUBAHAN UTAMA ADA DI SINI:
+    return view('member.dstore', compact('store', 'totalProducts'));
+}
 }

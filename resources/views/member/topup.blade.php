@@ -60,7 +60,7 @@
         <main class="content-center">
             
             <div class="section-header page-title">
-                <h3>Isi Saldo Wallet</h3>
+                <h3>Isi Saldo JosjisPay</h3>
             </div>
 
             <div class="balance-header">
