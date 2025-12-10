@@ -63,6 +63,14 @@ class MemberController extends Controller
 
         return view('member.store', compact('store'));
     }
+    public function getTopup()
+    {
+        return view('member.topup');
+    }
+    public function createTopup()
+    {
+        return view('member.topupprocess');
+    }
 
     public function postStore(Request $request)
 {
