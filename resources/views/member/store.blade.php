@@ -198,9 +198,41 @@
     </div>
     
     <div class="form-group">
-        <label>Logo Toko</label>
-        <input type="file" name="logo" class="form-control">
+    <label class="form-label">Logo Toko</label>
+    
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('logo_input').click()" style="position: relative; overflow: hidden; min-height: 150px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+        
+        <div id="uploadPlaceholder" style="text-align: center;">
+            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 30px; color: #6366f1; margin-bottom: 10px;"></i>
+            <p style="font-size: 13px; color: #d1d5db;">Klik untuk upload Logo</p>
+            <span style="font-size: 11px; color: #6b7280;">Format: JPG, PNG (Max 2MB)</span>
+        </div>
+
+        <img id="logoPreview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; max-height: 200px; object-fit: contain; position: absolute; top:0; left: 0; width: 100%; height: 100%; background: #111827;">
+
+        <input type="file" name="logo" id="logo_input" accept="image/*" style="display: none;" onchange="previewLogo(this)">
     </div>
+</div>
+
+<script>
+    function previewLogo(input) {
+        const placeholder = document.getElementById('uploadPlaceholder');
+        const preview = document.getElementById('logoPreview');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Tampilkan gambar dan sembunyikan placeholder
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
                     <div class="checkbox-container" style="margin-top: 20px;">
                         <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
                             <input type="checkbox" required style="width: 16px; height: 16px;">

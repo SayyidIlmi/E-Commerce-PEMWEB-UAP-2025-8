@@ -759,10 +759,7 @@ body.dashboard-body {
     font-weight: bold;
 }
 
-.support-card {
-    background-color: #312e81;
-    border: 1px solid #4338ca;
-}
+.support-card { margin-top: 20px; background-color: #312e81; border: 1px solid #4338ca; }
 
 .support-card h3 {
     font-size: 15px;
@@ -770,11 +767,6 @@ body.dashboard-body {
     margin-bottom: 10px;
 }
 
-.support-card p {
-    font-size: 12px;
-    color: #c7d2fe;
-    line-height: 1.5;
-}
 
 /* Transaction & History */
 .page-title {
