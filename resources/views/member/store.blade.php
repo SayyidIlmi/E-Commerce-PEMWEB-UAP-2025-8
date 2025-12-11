@@ -101,27 +101,14 @@
 @endif
     <div class="container" style="max-width: 800px; display: block;">
 
+            @if(Auth::user()->store && Auth::user()->store->is_verified)
+                <script>
+                    window.location.href = "{{ route('member.mystore') }}";
+                </script>
+            @elseif(Auth::user()->store && !Auth::user()->store->is_verified)
         <div class="card" style="margin-top: 40px;">
 
             {{-- LOGIKA UTAMA --}}
-            @if(Auth::user()->store && Auth::user()->store->is_verified)
-
-                <div class="status-container">
-                    <i class="fa-solid fa-circle-check status-icon status-success"></i>
-                    <h2 style="color: white; margin-bottom: 10px;">Selamat! Toko Anda Terverifikasi</h2>
-                    <p style="color: #9ca3af; margin-bottom: 30px;">
-                        Anda sekarang adalah Seller resmi di Hardware_JosJis. Mulai tambahkan produk Anda sekarang.
-                    </p>
-
-                    <div style="display: flex; gap: 15px; justify-content: center;">
-                        <a href="{{ route('member.mystore') }}" class="submit-btn"
-                            style="width: auto; background: #374151; color: white; text-decoration: none;">
-                            <i class="fa-solid fa-chart-line"></i> Dashboard Toko
-                        </a>
-                    </div>
-                </div>
-
-            @elseif(Auth::user()->store && !Auth::user()->store->is_verified)
 
                 <div class="status-container">
                     <i class="fa-solid fa-hourglass-half status-icon status-pending"></i>

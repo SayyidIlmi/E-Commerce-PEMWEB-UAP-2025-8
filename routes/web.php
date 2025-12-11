@@ -53,7 +53,10 @@ Route::middleware(['auth', 'member.only'])->group(function () {
     Route::post('/member/store', [MemberController::class, 'postStore'])->name('member.store.save');
     Route::get('/member/dstore/{id}', [MemberController::class, 'showStore'])->name('member.dstore');
     Route::middleware(['auth', 'member.only'])->group(function () {
-        Route::get('/member/mystore', [MemberController::class, 'sellerDashboard'])->name('member.mystore');
+    Route::get('/member/mystore', [MemberController::class, 'sellerDashboard'])->name('member.mystore');
+    Route::get('/member/mystore/manage', [MemberController::class, 'sellerManage'])->name('member.mystore-m');
+    Route::get('/member/mystore/order', [MemberController::class, 'sellerOrder'])->name('member.mystore-o');
+    Route::get('/member/mystore/withdrawal', [MemberController::class, 'sellerWithdraw'])->name('member.mystore-w');
 });
 });
 
