@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Store;
 use App\Models\Transaction;
+use App\Models\StoreBalance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -51,7 +52,10 @@ class AdminController extends Controller
     {
         $store = Store::findOrFail($id);
         $store->update(['is_verified' => true]);
-
+        StoreBalance::create([
+            'store_id' => $store->id,
+            'balance' => 0,
+        ]);
         return back()->with('success', 'Toko berhasil diverifikasi!');
     }
 

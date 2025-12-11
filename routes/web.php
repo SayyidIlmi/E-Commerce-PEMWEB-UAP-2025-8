@@ -55,8 +55,14 @@ Route::middleware(['auth', 'member.only'])->group(function () {
     Route::middleware(['auth', 'member.only'])->group(function () {
     Route::get('/member/mystore', [MemberController::class, 'sellerDashboard'])->name('member.mystore');
     Route::get('/member/mystore/manage', [MemberController::class, 'sellerManage'])->name('member.mystore-m');
+    Route::get('/member/mystore/manage/addproduct', [MemberController::class, 'sellerManage'])->name('member.mystore-m.addproduct');
+    Route::post('/member/mystore/manage', [MemberController::class, 'sellerManageAdd'])->name('member.mystore-m.add');
+    Route::put('/member/mystore/manage', [MemberController::class, 'sellerManage'])->name('member.mystore-m.process');
+    Route::delete('/member/mystore/manage/{id}', [MemberController::class, 'sellerManageDelete'])->name('member.mystore-m.delete');
     Route::get('/member/mystore/order', [MemberController::class, 'sellerOrder'])->name('member.mystore-o');
+    Route::put('/member/mystore/order', [MemberController::class, 'sellerOrder'])->name('member.mystore-o.process');
     Route::get('/member/mystore/withdrawal', [MemberController::class, 'sellerWithdraw'])->name('member.mystore-w');
+    Route::post('/member/mystore/withdrawal', [MemberController::class, 'sellerWithdraw'])->name('member.balance.withdraw');
 });
 });
 

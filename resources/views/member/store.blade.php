@@ -105,7 +105,7 @@
                 <script>
                     window.location.href = "{{ route('member.mystore') }}";
                 </script>
-            @elseif(Auth::user()->store && !Auth::user()->store->is_verified)
+            @elseif(Auth::user()->store && !Auth::user()->isSeller())
         <div class="card" style="margin-top: 40px;">
 
             {{-- LOGIKA UTAMA --}}

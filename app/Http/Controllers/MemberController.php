@@ -91,51 +91,125 @@ class MemberController extends Controller
             ->count();
         $totalProducts = Product::where('store_id', $store->id)->count();
         $recentOrders = $store->transactions()
-    ->with('transactionDetails.product')
-    ->orderBy('shipping','asc')
-    ->latest()
-    ->limit(5)
-    ->get();
-    // dd($recentOrders);
+            ->with('transactionDetails.product')
+            ->orderBy('shipping', 'asc')
+            ->latest()
+            ->limit(5)
+            ->get();
         return view('member.mystore', compact('store', 'currentBalance', 'pendingOrders', 'totalProducts', 'recentOrders'));
     }
     public function sellerManage()
+    {
+        $store = Store::where('user_id', Auth::id())->firstOrFail();
+        $products = Product::where('store_id', $store->id)
+            ->with('store')
+            ->latest()
+            ->paginate(10);
+        if (!$store->is_verified) {
+            return redirect()->route('member.store');
+        }
+        $pendingOrders = Transaction::where('store_id', $store->id)
+            ->where('shipping', 'pesanan-diproses')
+            ->count();
+        return view('member.mystore-m', compact('pendingOrders', 'store', 'products'));
+    }
+    public function sellerManageAdd(Request $request)
+    {
+        $store = Store::where('user_id', Auth::id())->firstOrFail();
+        $request->validate([
+            'product_category_id' => 'required|exists:product_categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:1',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'stock' => 'required|integer|min:1',
+        ]);
+        $slug = Str::slug($request->name);
+        $file = $request->file('image');
+        $imageName = $store->name.'-'.$slug.'.' .$file->getClientOriginalExtension();
+        $file->move(public_path('ImageSource'), $imageName);
+        Product::create([
+            'store_id' => Auth::user()->store->id,
+            'product_category_id' => $request->product_category_id,
+            'name' => $request->name,
+            'slug' => $slug,
+            'description' => $request->description,
+            'condition' => 'new',
+            'price' => $request->price,
+            'weight' => 1,
+            'stock' => $request->stock,
+        ]);
+
+
+        return redirect()->route('member.mystore-m')
+            ->with('success', 'Produk berhasil ditambahkan!');
+    }
+    public function sellerManageEdit(Request $request)
+    {
+        $request->validate([
+            // 'store_id'=> $store->id,
+            'product_category_id' => 'required|exists:product_categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'condition' => 'new',
+            'price' => 'required|numeric|min:1',
+            'weight' => '1',
+            'stock' => 'required|integer|min:1',
+        ]);
+
+    }
+    public function sellerManageDelete($id)
+    {
+        $products = Product::findOrFail($id);
+        $products->delete();
+        return redirect()->route('member.mystore-m')
+            ->with('success', 'Toko berhasil dihapus.');
+    }
+
+    public function sellerOrder()
     {
         $store = Store::where('user_id', Auth::id())->firstOrFail();
 
         if (!$store->is_verified) {
             return redirect()->route('member.store');
         }
+
         $pendingOrders = Transaction::where('store_id', $store->id)
             ->where('shipping', 'pesanan-diproses')
             ->count();
-        return view('member.mystore-m',compact('pendingOrders', 'store', 'recentOrders'));
+
+        $recentOrders = $store->transactions()
+            ->with('transactionDetails.product')
+            ->orderBy('shipping', 'asc')
+            ->latest()
+            ->paginate(5)
+            ->appends(['status' => request('status')]);
+
+        $status = $store->transactions()
+            ->with('transactionDetails.product')
+            ->orderBy('shipping', 'asc')
+            ->latest()
+            ->paginate(10);
+
+        return view('member.mystore-o', compact('status', 'pendingOrders', 'store', 'recentOrders'));
     }
-    
-    public function sellerOrder()
+    public function sellerWithdraw()
     {
+
         $store = Store::where('user_id', Auth::id())->firstOrFail();
-    
+        $incomeHistory = $store->transactions()
+            ->with('transactionDetails.product')
+            ->orderBy('shipping', 'asc')
+            ->latest()
+            ->paginate(10);
+        $balance = StoreBalance::where('store_id', $store->id)->first();
         if (!$store->is_verified) {
             return redirect()->route('member.store');
         }
         $pendingOrders = Transaction::where('store_id', $store->id)
             ->where('shipping', 'pesanan-diproses')
             ->count();
-            return view('member.mystore-o',compact('pendingOrders', 'store', 'recentOrders'));
-        }
-        public function sellerWithdraw()
-        {
-            $store = Store::where('user_id', Auth::id())->firstOrFail();
-        
-            if (!$store->is_verified) {
-                return redirect()->route('member.store');
-            }
-            $pendingOrders = Transaction::where('store_id', $store->id)
-                ->where('shipping', 'pesanan-diproses')
-                ->count();
-            
-        return view('member.mystore-w',compact('pendingOrders', 'store', 'recentOrders'));
+        return view('member.mystore-w', compact('pendingOrders', 'store', 'balance', 'incomeHistory'));
     }
 
     public function getTopup()
@@ -202,17 +276,9 @@ class MemberController extends Controller
             'postal_code' => $request->postal_code,
             'is_verified' => 0, // Default belum diverifikasi
         ]);
-        StoreBalance::create([
-            'store_id' => auth()->user()->store->id,
-            'balance' => 0,
-        ]);
+        
 
         return redirect()->route('member.store')->with('success', 'Toko berhasil didaftarkan!');
-    }
-
-    public function createProduct()
-    {
-        return view('member.productcreate');
     }
 
     public function checkout(Request $request, $id)

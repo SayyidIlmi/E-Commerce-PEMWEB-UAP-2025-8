@@ -6,7 +6,7 @@
     <title>Saldo Toko - Hardware_JosJis</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href={{asset('style.css')}}>
     <style>
         /* CSS Khusus Kartu Saldo */
         .balance-card-main {
@@ -96,52 +96,61 @@
         </div>
     </nav>
 
+ @if(session('success'))
+                <div class="alert"
+                    style="background: rgba(74, 222, 128, 0.1); border: 1px solid #4ade80; color: #4ade80; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-check-circle"></i> {{ session('success') }}
+                </div>
+            @endif
     <div class="seller-container">
-        
         <aside class="sidebar-left">
             <div class="card card-sidebar">
-                <div class="store-info-content" style="flex-direction: column; text-align: center; margin-bottom: 20px;">
-                <div class="store-logo-lg" style="width: 120px; height: 120px; font-size: 24px; margin: 0 auto;">
-                    <img src="{{ asset('logo/' . $store->logo) }}" alt="Logo" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+                <div class="store-info-content"
+                    style="flex-direction: column; text-align: center; margin-bottom: 20px;">
+                    <div class="store-logo-lg" style="width: 120px; height: 120px; font-size: 24px; margin: 0 auto;">
+                        <img src="{{ asset('logo/' . $store->logo) }}" alt="Logo"
+                            style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+                    </div>
+                    <h3 style="color:white; margin-bottom:10px;">{{ $store->name }}</h3>
                 </div>
-                <h3 style="color:white; margin-top:10px;">{{ $store->name }}</h3>
-            </div>
-                <div class="card-header-sm"><h3>Menu Toko</h3></div>
+                <div class="card-header-sm">
+                    <h3>Menu Toko</h3>
+                </div>
                 <ul class="category-list">
                     <li>
-                        <a href="{{ route('member.store') }}" class="active" style="background: #374151; color: white;">
+                        <a href="{{ route('member.mystore') }}" class="active"
+                            style="background: #374151; color: white;">
                             <i class="fa-solid fa-chart-line" style="width: 20px;"></i> Dashboard
                         </a>
                     </li>
-                    <li style="margin-top: 15px; margin-bottom: 5px; font-size: 11px; color: #6b7280; padding-left: 15px;">PRODUK</li>
-                    {{-- Ganti href dengan route manajemen produk kamu jika sudah ada --}}
-                    <li><a href="#"><i class="fa-solid fa-box-open" style="width: 20px;"></i> Manajemen Produk</a></li>
-                    
-                    <li style="margin-top: 15px; margin-bottom: 5px; font-size: 11px; color: #6b7280; padding-left: 15px;">PESANAN</li>
+                    <li
+                        style="margin-top: 15px; margin-bottom: 5px; font-size: 11px; color: #6b7280; padding-left: 15px;">
+                        PRODUK</li>
+                    <li><a href="{{ route('member.mystore-m') }}"><i class="fa-solid fa-box-open"
+                                style="width: 20px;"></i> Manajemen Produk</a></li>
+
+                    <li
+                        style="margin-top: 15px; margin-bottom: 5px; font-size: 11px; color: #6b7280; padding-left: 15px;">
+                        PESANAN</li>
                     <li>
-                        <a href="#">
-                            <i class="fa-solid fa-clipboard-list" style="width: 20px;"></i> Pesanan Masuk 
+                        <a href="{{route('member.mystore-o')}}">
+                            <i class="fa-solid fa-clipboard-list" style="width: 20px;"></i> Pesanan Masuk
                             @if($pendingOrders > 0)
-                                <span class="badge bg-pending" style="float: right; font-size: 10px;">{{ $pendingOrders }}</span>
+                                <span class="badge bg-pending"
+                                    style="float: right; font-size: 10px;">{{ $pendingOrders }}</span>
                             @endif
                         </a>
                     </li>
-                    
-                    <li style="margin-top: 15px; margin-bottom: 5px; font-size: 11px; color: #6b7280; padding-left: 15px;">KEUANGAN</li>
-                    <li><a href="#"><i class="fa-solid fa-wallet" style="width: 20px;"></i> Saldo Toko</a></li>
-                    
-                    <li style="margin-top: 15px; margin-bottom: 5px; font-size: 11px; color: #6b7280; padding-left: 15px;">PENGATURAN</li>
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" style="color: #f87171;">
-                                <i class="fa-solid fa-right-from-bracket" style="width: 20px;"></i> Logout
-                            </a>
-                        </form>
+
+                    <li
+                        style="margin-top: 15px; margin-bottom: 5px; font-size: 11px; color: #6b7280; padding-left: 15px;">
+                        KEUANGAN</li>
+                    <li><a href="{{route('member.mystore-w')}}"><i class="fa-solid fa-wallet" style="width: 20px;"></i>
+                            Saldo Toko</a></li>
                     </li>
                 </ul>
             </div>
-        </aside>
+        </aside>    
 
         <div class="main-content">
 
@@ -167,7 +176,7 @@
 
             <div class="balance-card-main">
                 <div style="font-size: 14px; opacity: 0.9;">Total Saldo Aktif</div>
-                <div class="balance-amount-lg">Rp {{ number_format($balance->balance, 0, ',', '.') }}</div>
+                <div class="balance-amount-lg">Rp {{ number_format($balance->balance, 0, ',', '.') }}.000</div>
                 <div style="display: flex; justify-content: space-between; align-items: end;">
                     <p style="font-size: 12px; opacity: 0.8; margin-bottom: 0;">Dana dapat ditarik ke rekening bank terdaftar.</p>
                     <button onclick="openModal()" style="background: white; color: #059669; border: none; padding: 10px 20px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
@@ -187,7 +196,7 @@
                             <tr>
                                 <th>Tanggal</th>
                                 <th>No. Pesanan</th>
-                                <th>Keterangan</th>
+                                <th>Status</th>
                                 <th>Nominal</th>
                             </tr>
                         </thead>
@@ -202,10 +211,14 @@
                                     <span style="color: #6366f1; font-weight: 500;">{{ $history->code }}</span>
                                 </td>
                                 <td>
-                                    <span style="color: #d1d5db;">Penjualan selesai dari <strong>{{ $history->user->name ?? 'Guest' }}</strong></span>
+                                    @if ($history->shipping=='pesanan-diproses')
+                                    <span class="badge bg-pending">{{ $history->shipping }}</span>
+                                    @else
+                                    <span class="badge bg-success">{{ $history->shipping }}</span>
+                                    @endif
                                 </td>
                                 <td style="text-align: right;">
-                                    <span style="color: #4ade80; font-weight: 600;">+ Rp {{ number_format($history->grand_total, 0, ',', '.') }}</span>
+                                    <span style="color: #4ade80; font-weight: 600;">+ Rp {{ number_format($history->grand_total, 0, ',', '.') }}.000</span>
                                 </td>
                             </tr>
                             @empty
@@ -240,7 +253,7 @@
                 <div class="form-group">
                     <label class="form-label">Nominal Penarikan (Rp)</label>
                     <input type="number" name="amount" class="form-input" placeholder="Min. 10.000" min="10000" required>
-                    <small style="color: #6b7280; font-size: 10px;">Saldo saat ini: Rp {{ number_format($balance->balance, 0, ',', '.') }}</small>
+                    <small style="color: #6b7280; font-size: 10px;">Saldo saat ini: Rp {{ number_format($balance->balance, 0, ',', '.') }}.000</small>
                 </div>
 
                 <div class="form-group">
