@@ -7,6 +7,13 @@
 
 ![Laravel](https://img.shields.io/badge/Laravel-12%2B-red) ![Bootstrap](https://img.shields.io/badge/CSS-Custom-blue) ![Status](https://img.shields.io/badge/Status-Development-orange)
 
+## 📋 Urutan Penggunaan
+
+* **Admin =>** "Register"->"login"->bisa memverifikasi toko di "dashboard"->manajemen toko di sidebar "data toko"->manajemen user di "data toko" untuk edit user yang nama nya sensitif dan menghapus user jika diperlukan
+* **Member =>** "Register"->"login"->top up terlebih dahulu di "topup saldo" -> checkout product yang ingin dibeli di"dashboard","kategori produk","toko kami"-> bisa memilih berapa banyak barang yang ingin dibeli-> checkout-> menunggu di proses toko-> lihat "riwayat transaksi" untuk melihat list pemesanan 
+* **Seller =>:** "Register"->"login"->mendaftar toko di "toko saya"-> menunggu diverifikasi admin-> di dashboard mystore bisa melihat saldo toko,pesanan terbarubisa menambah produk di->"manajemen produk" (menambah,edit,delete produk), meng-acc pesanan masuk di "pesanan masuk"-> mencairkan saldo toko ke rekening di "saldo toko"
+
+---
 ## 📋 Fitur Utama
 
 Aplikasi ini membagi pengguna menjadi tiga peran utama dengan fungsionalitas berbeda:
@@ -62,6 +69,9 @@ Pastikan komputer Anda telah terinstal:
 * Web Server (Apache/Nginx/Laragon/XAMPP)
 
 ---
+## ⚙️ struktur tabel
+
+![alt text](Arsitektur-sql.png)
 
 ## 🚀 Cara Instalasi
 

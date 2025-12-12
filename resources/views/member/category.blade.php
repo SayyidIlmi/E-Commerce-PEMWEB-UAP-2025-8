@@ -114,7 +114,7 @@
         <aside class="sidebar-right">
             <div class="card location-card">
                 <div class="card-header-sm">
-                    <h3>Cabang / Lokasi</h3>
+                    <h3>Toko Kami</h3>
                 </div>
                 <ul class="location-list">
                     @foreach($latestStores as $store)
