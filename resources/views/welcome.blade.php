@@ -192,9 +192,9 @@
                 <span class="logo-text">Hardware_JosJis</span>
             </div>
             <ul class="nav-links">
-                <li><a href="#" class="active">Beranda</a></li>
-                <li><a href="#produk">Produk</a></li>
+                <li><a href="#dashboard" class="active">Beranda</a></li>
                 <li><a href="#fitur">Keunggulan</a></li>
+                <li><a href="#produk">Produk</a></li>
             </ul>
             @guest
                 <div class="nav-actions">
@@ -229,51 +229,53 @@
     </nav>
 
     <div class="landing-container">
-
-    <div class="brand-header-container">
-        <div class="brand-header-logo">
-            <img src="{{asset('ImageSource/landing_page_josjis.png')}}" alt="Hardware_JosJis Big Logo">
-        </div>
-    </div>
-
-    
-        <div class="brand-marquee">
-            <div class="marquee-content">
-                <span><i class="fa-brands fa-windows"></i> Microsoft</span>
-                <span><i class="fa-brands fa-apple"></i> Apple</span>
-                <span><i class="fa-brands fa-intel"></i> Intel</span>
-                <span><i class="fa-brands fa-amd"></i> AMD</span>
-                <span><i class="fa-brands fa-nvidia"></i> Nvidia</span>
-                <span><i class="fa-brands fa-playstation"></i> PlayStation</span>
-                <span><i class="fa-brands fa-windows"></i> Microsoft</span>
-                <span><i class="fa-brands fa-apple"></i> Apple</span>
-                <span><i class="fa-brands fa-intel"></i> Intel</span>
-                <span><i class="fa-brands fa-amd"></i> AMD</span>
+        
+        <div class="brand-header-container">
+            <div class="brand-header-logo">
+                <img src="{{asset('ImageSource/landing_page_josjis.png')}}" alt="Hardware_JosJis Big Logo">
             </div>
         </div>
-
-        <section class="hero-section">
-            <div class="hero-blob" style="top: -50px; left: -50px;"></div>
-            <div class="hero-blob" style="bottom: -50px; right: -50px; background: #ec4899;"></div>
-
-            <div class="hero-text">
-                <h1>Upgrade Setup,<br>Level Up Skill.</h1>
-                <p>Temukan laptop gaming, peripheral, dan komponen PC terbaik dengan harga yang masuk akal. Garansi resmi, pengiriman aman ke seluruh Indonesia.</p>
-                
-                <div style="display: flex; gap: 15px;">
-                    <a href="login" class="submit-btn"
-                        style="width: auto; padding: 15px 40px; background: #6366f1; color: white; text-decoration: none;">Belanja
-                        Sekarang</a>
-                    <a href="#produk" class="submit-btn"
-                        style="width: auto; padding: 15px 30px; background: #374151; color: white; text-decoration: none;">Lihat
-                        Katalog</a>
+        
+        <section id="dashboard">
+            
+            <div class="brand-marquee">
+                <div class="marquee-content">
+                    <span><i class="fa-brands fa-windows"></i> Microsoft</span>
+                    <span><i class="fa-brands fa-apple"></i> Apple</span>
+                    <span><i class="fa-brands fa-intel"></i> Intel</span>
+                    <span><i class="fa-brands fa-amd"></i> AMD</span>
+                    <span><i class="fa-brands fa-nvidia"></i> Nvidia</span>
+                    <span><i class="fa-brands fa-playstation"></i> PlayStation</span>
+                    <span><i class="fa-brands fa-windows"></i> Microsoft</span>
+                    <span><i class="fa-brands fa-apple"></i> Apple</span>
+                    <span><i class="fa-brands fa-intel"></i> Intel</span>
+                    <span><i class="fa-brands fa-amd"></i> AMD</span>
                 </div>
             </div>
-
-            <div class="hero-image">
-                <img src={{asset('ImageSource/landing_page_josjis.png')}} alt="Laptop Gaming">
-            </div>
-        </section>
+            
+            <section class="hero-section">
+                <div class="hero-blob" style="top: -50px; left: -50px;"></div>
+                <div class="hero-blob" style="bottom: -50px; right: -50px; background: #ec4899;"></div>
+                
+                <div class="hero-text">
+                    <h1>Upgrade Setup,<br>Level Up Skill.</h1>
+                    <p>Temukan laptop gaming, peripheral, dan komponen PC terbaik dengan harga yang masuk akal. Garansi resmi, pengiriman aman ke seluruh Indonesia.</p>
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <a href="login" class="submit-btn"
+                        style="width: auto; padding: 15px 40px; background: #6366f1; color: white; text-decoration: none;">Belanja
+                        Sekarang</a>
+                        <a href="#produk" class="submit-btn"
+                        style="width: auto; padding: 15px 30px; background: #374151; color: white; text-decoration: none;">Lihat
+                        Katalog</a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <img src={{asset('ImageSource/landing_page_josjis.png')}} alt="Laptop Gaming">
+                </div>
+            </section>
+            </section>
 
         <section id="fitur">
             <div class="section-header" style="text-align: center; margin-top: 60px;">
@@ -432,5 +434,25 @@
     </div>
 
 </body>
+<script>
+    document.querySelectorAll('a[href*="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        // Prevent default anchor click behavior (instant jump)
+        e.preventDefault();
 
+        // Get the target element's ID from the href attribute
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+
+        // Check if the target element exists
+        if (targetElement) {
+            // Smoothly scroll to the target element
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start' // Aligns the top of the element to the top of the viewport
+            });
+        }
+    });
+});
+</script>
 </html>
